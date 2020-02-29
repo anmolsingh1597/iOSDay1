@@ -12,7 +12,9 @@ class IntialViewController: UIViewController {
 
     @IBOutlet weak var intialConnection: UILabel!
     
+    @IBOutlet weak var iText: UITextField!
     
+    @IBOutlet weak var iPassword: UITextField!
     
     override func viewWillDisappear(_ animated: Bool) {
         print("viewWillDisappear")
@@ -37,11 +39,15 @@ class IntialViewController: UIViewController {
     }
     
     @IBAction func iButton(_ sender: UIButton) {
-        intialConnection.text = "Let get this started!!"
+    //   intialConnection.text = "Let get this started!!"
+        // intialConnection.text = iText.text ?? ""
+        if iPassword.text == "anmolSingh"{
+            intialConnection.text = "Login Successful"
+        }
     }
     
     @IBAction func iTextField(_ sender: UITextField) {
-        
+         intialConnection.text = iText.text ?? ""
     }
     
 
