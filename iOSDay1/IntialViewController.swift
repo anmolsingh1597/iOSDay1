@@ -41,8 +41,10 @@ class IntialViewController: UIViewController {
     @IBAction func iButton(_ sender: UIButton) {
     //   intialConnection.text = "Let get this started!!"
         // intialConnection.text = iText.text ?? ""
-        if iPassword.text == "anmolSingh"{
+        if iPassword.text == "anmolSingh" && iText.text == "Anmol"{
             intialConnection.text = "Login Successful"
+        }else{
+            intialConnection.text = "Login Failed"
         }
     }
     
