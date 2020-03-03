@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class IntialViewController: UIViewController {
+    
+    var ref = Database.database().reference()
+
+
 
     @IBOutlet weak var intialConnection: UILabel!
     
@@ -85,10 +90,20 @@ class IntialViewController: UIViewController {
 //        }else{
 //            intialConnection.text = "Login Failed"
 //        }
+    let user = iText.text
+    let password = iPassword.text
+        guard let key = ref.child("Users").childByAutoId().key else { return }
+        let insert = ["userName": user,
+                    "password": password]
+        let childUpdates = ["/Users/\(key)": insert]
+        ref.updateChildValues(childUpdates)
+        
     }
     
     @IBAction func iTextField(_ sender: UITextField) {
          intialConnection.text = iText.text ?? ""
+//        let user = intialConnection.text
+//        self.ref.child("users").setValue(["username": user ])
     }
     
 
