@@ -97,7 +97,15 @@ class IntialViewController: UIViewController {
                     "password": password]
         let childUpdates = ["/Users/\(key)": insert]
         ref.updateChildValues(childUpdates)
-        
+//        
+//        let refe = ref.child("Users").child("userName")
+//
+//        refe.observeSingleEvent(of: .childAdded, with: { (snapshot) in
+//             if let userDict = snapshot.value as? [String:Any] {
+//                  //Do not cast print it directly may be score is Int not string
+//                  debugPrint(userDict["password"]!)
+//             }
+//        })
     }
     
     @IBAction func iTextField(_ sender: UITextField) {
