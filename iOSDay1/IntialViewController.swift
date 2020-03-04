@@ -45,7 +45,7 @@ class IntialViewController: UIViewController {
     
     @IBAction func iButton(_ sender: UIButton) {
         
-
+        // assign tag to button in button attributes inspector
           if sender.tag == 0 //Show alert
           {
           let alertController = UIAlertController(title: "Error", message:
@@ -61,17 +61,25 @@ class IntialViewController: UIViewController {
            
           self.present(alertController, animated: true, completion: nil)
           }
-           
-          if sender.tag == 1 //show action
+           // assign tag to button in button attributes inspector
+          if sender.tag == 1 //show action- pop up from bottom
           {
-            let alertController = UIAlertController(title: "Error", message:
-              "Hello, world!", preferredStyle: .actionSheet)
-             alertController.addAction(UIAlertAction(title: "default", style: .default))
-             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            // alertController.addAction(UIAlertAction(title: "default2", style: .default))
-             alertController.addAction(UIAlertAction(title: "Destructive1", style: .destructive))
-            //alertController.addAction(UIAlertAction(title: "Destructive2", style: .destructive, handler: { (sender) in
-           // print("Click Destructive")
+            let alertController = UIAlertController(title: "Action", message:
+              "Tasks", preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "Sign in", style: .default, handler: {(sender) in
+                let user = self.iText.text
+                let password = self.iPassword.text
+                guard let key = self.ref.child("Users").childByAutoId().key else { return } // value assign in firebase through alert in "Sign in Key"
+                       let insert = ["userName": user,
+                                   "password": password]
+                       let childUpdates = ["/Users/\(key)": insert]
+                self.ref.updateChildValues(childUpdates)
+            }))
+         //   alertController.addAction(UIAlertAction(title: "Add new", style: .destructive))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+             // alertController.addAction(UIAlertAction(title: "default2", style: .default))
+            alertController.addAction(UIAlertAction(title: "Destructive2", style: .destructive, handler: { (sender) in
+                print("Click Destructive")}))
              self.present(alertController, animated: true, completion: nil)
              }
     
@@ -90,14 +98,17 @@ class IntialViewController: UIViewController {
 //        }else{
 //            intialConnection.text = "Login Failed"
 //        }
-    let user = iText.text
-    let password = iPassword.text
-        guard let key = ref.child("Users").childByAutoId().key else { return }
-        let insert = ["userName": user,
-                    "password": password]
-        let childUpdates = ["/Users/\(key)": insert]
-        ref.updateChildValues(childUpdates)
-//        
+        
+    //update in database as dictionary
+//    let user = iText.text
+//    let password = iPassword.text
+//        guard let key = ref.child("Users").childByAutoId().key else { return }
+//        let insert = ["userName": user,
+//                    "password": password]
+//        let childUpdates = ["/Users/\(key)": insert]
+//        ref.updateChildValues(childUpdates)
+//
+        //read attempt from database
 //        let refe = ref.child("Users").child("userName")
 //
 //        refe.observeSingleEvent(of: .childAdded, with: { (snapshot) in
