@@ -74,13 +74,14 @@ class IntialViewController: UIViewController {
                guard let key = self.ref.child("Users").childByAutoId().key else { return } // value assign in firebase through alert in "Sign in Key"
                        let insert = ["userName": user,
                                    "password": password]
-                
+//Firebase: check before user already present in Firebase or not
                  let refer = self.ref.child("Users")
                 refer.observeSingleEvent(of: .value, with: { (snapshot) in
                     if let userDict = snapshot.value as? [String:[String:String]]{
                         if userDict.values.contains(insert as! [String: String]){
                             print("User exist")
                         }else{
+// values inserted successfully
                               let childUpdates = ["/Users/\(key)": insert]
                              self.ref.updateChildValues(childUpdates)
                         }
