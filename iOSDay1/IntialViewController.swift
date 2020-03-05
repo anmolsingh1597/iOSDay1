@@ -46,7 +46,7 @@ class IntialViewController: UIViewController {
     @IBAction func iButton(_ sender: UIButton) {
         
         // assign tag to button in button attributes inspector
-          if sender.tag == 0 //Show alert
+          if sender.tag == 0 //Show alert- alert in front
           {
           let alertController = UIAlertController(title: "Error", message:
             "Hello, world!", preferredStyle: .alert)
@@ -66,20 +66,33 @@ class IntialViewController: UIViewController {
           {
             let alertController = UIAlertController(title: "Action", message:
               "Tasks", preferredStyle: .actionSheet)
-            alertController.addAction(UIAlertAction(title: "Sign in", style: .default, handler: {(sender) in
+            alertController.addAction(UIAlertAction(title: "Add in", style: .default, handler: {(sender) in
                 let user = self.iText.text
                 let password = self.iPassword.text
-                guard let key = self.ref.child("Users").childByAutoId().key else { return } // value assign in firebase through alert in "Sign in Key"
+               guard let key = self.ref.child("Users").childByAutoId().key else { return } // value assign in firebase through alert in "Sign in Key"
                        let insert = ["userName": user,
                                    "password": password]
                        let childUpdates = ["/Users/\(key)": insert]
                 self.ref.updateChildValues(childUpdates)
             }))
-         //   alertController.addAction(UIAlertAction(title: "Add new", style: .destructive))
+            alertController.addAction(UIAlertAction(title: "Sign in", style: .destructive, handler: {(sender) in
+                let refer = self.ref.child("Users")
+            //   let user = self.iText.text as Any
+             //  let password = self.iPassword.text
+             // var userData: Dictionary<String,Any>
+                refer.observeSingleEvent(of: .value, with: { (snapshot) in
+                          if let userDict = snapshot.value as? [String:Any] {
+                               //Do not cast print it directly may be score is Int not string
+                          //  userData = userDict.values
+                            print(userDict.values)
+                         //   if userDict.values.contains(user)
+                    }
+                     })
+            }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
              // alertController.addAction(UIAlertAction(title: "default2", style: .default))
-            alertController.addAction(UIAlertAction(title: "Destructive2", style: .destructive, handler: { (sender) in
-                print("Click Destructive")}))
+           /*alertController.addAction(UIAlertAction(title: "Destructive2", style: .destructive, handler: { (sender) in
+                print("Click Destructive")}))*/
              self.present(alertController, animated: true, completion: nil)
              }
     
@@ -100,23 +113,23 @@ class IntialViewController: UIViewController {
 //        }
         
     //update in database as dictionary
-//    let user = iText.text
-//    let password = iPassword.text
-//        guard let key = ref.child("Users").childByAutoId().key else { return }
-//        let insert = ["userName": user,
-//                    "password": password]
-//        let childUpdates = ["/Users/\(key)": insert]
-//        ref.updateChildValues(childUpdates)
-//
+  /*  let user = iText.text
+    let password = iPassword.text
+        guard let key = ref.child("Users").childByAutoId().key else { return }
+        let insert = ["userName": user,
+                    "password": password]
+        let childUpdates = ["/Users/\(key)": insert]
+        ref.updateChildValues(childUpdates)
+*/
         //read attempt from database
-//        let refe = ref.child("Users").child("userName")
-//
-//        refe.observeSingleEvent(of: .childAdded, with: { (snapshot) in
-//             if let userDict = snapshot.value as? [String:Any] {
-//                  //Do not cast print it directly may be score is Int not string
-//                  debugPrint(userDict["password"]!)
-//             }
-//        })
+ /*       let refe = ref.child("Users").child("userName")
+
+        refe.observeSingleEvent(of: .childAdded, with: { (snapshot) in
+             if let userDict = snapshot.value as? [String:Any] {
+                  //Do not cast print it directly may be score is Int not string
+                  debugPrint(userDict["password"]!)
+             }
+        })*/
     }
     
     @IBAction func iTextField(_ sender: UITextField) {
